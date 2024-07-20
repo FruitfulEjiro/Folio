@@ -1,0 +1,385 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+// Variables
+$Poppins: "Poppins", sans-serif;
+$primary: #29a688;
+$secondary: #2d6e62;
+$darkbg: #0a0a0a;
+$lightbg: #f5f5f5;
+$dark: #000000;
+$light: #fff;
+$transparent: #00000000;
+
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: none;
+  text-decoration: none;
+  box-sizing: border-box;
+  font-family: $Poppins;
+  // border: 1px solid red;
+}
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+// Navbar
+.header {
+  height: 4rem;
+  box-shadow: 1px 1px 5px $dark;
+}
+.nav {
+  position: relative;
+  height: 100%;
+}
+.navigation {
+  position: absolute;
+  top: 3rem;
+  left: 0rem;
+  width: 100%;
+  visibility: collapse;
+  overflow: hidden;
+  transform: translateY(30%);
+  transition: all 0.2s ease-in-out;
+}
+.header-nav li,
+.login-signup button {
+  font-size: 1.3rem;
+}
+.header-nav li a {
+  color: $primary;
+}
+.login-btn {
+  color: $light;
+}
+.signup-btn {
+  color: $primary;
+}
+.login-btn:hover {
+  background: $light;
+  color: $primary;
+}
+.signup-btn:hover {
+  background: $primary;
+  color: $light;
+}
+.login,
+.signup {
+  color: inherit;
+}
+
+// HERO
+.hero {
+  width: 100%;
+  height: 100vh;
+}
+.hero-container {
+  height: 100%;
+  width: 100%;
+}
+.text-container {
+  padding: 10rem 0px 0px 0px;
+}
+.hero-img {
+  width: 100%;
+}
+.get-started-btn,
+.explore-templates-btn {
+  color: $light;
+}
+.get-started-btn:hover,
+.explore-templates-btn:hover {
+  background: $light;
+  color: $primary;
+}
+.get-started,
+.explore-templates {
+  color: inherit;
+}
+
+// ABOUT
+.about {
+  width: 100%;
+  height: auto;
+}
+.about-img {
+  width: 100%;
+}
+.about-sub-text {
+  font-size: 1rem;
+}
+
+// BENEFITS
+.benefits {
+  width: 100%;
+  height: auto;
+}
+.list-of-benefits {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  align-items: center;
+  justify-items: center;
+  grid-gap: 1.5rem;
+}
+.benefit-icon {
+  font-size: 5rem;
+  color: $primary;
+}
+
+// FEATURES
+.features {
+  width: 100%;
+  height: auto;
+}
+.list-of-features {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  align-items: center;
+  justify-items: center;
+  grid-gap: 1.5rem;
+}
+.feature-icon {
+  font-size: 5rem;
+}
+
+// CTA
+.cta {
+  background: linear-gradient(#00000099, #00000099),
+    url(../images/background.jpg) center/cover no-repeat;
+  height: auto;
+}
+.cta-btn {
+  color: $light;
+  border: none;
+}
+.cta-btn:hover {
+  background: $light;
+  color: $primary;
+}
+.cta-btn a {
+  color: inherit;
+}
+
+// CONTACT
+.contact-icon {
+  font-size: 1.5rem;
+}
+.contact-form {
+  width: 100%;
+  height: auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1.5fr 1fr;
+  align-content: center;
+  justify-content: start;
+}
+.firstname,
+.lastname,
+.subject {
+  width: 95%;
+  height: 3rem;
+  border: 1px solid $primary;
+}
+.message {
+  width: 95%;
+  height: 5rem;
+  border: 1px solid $primary;
+}
+.contact-btn {
+  width: 7rem;
+  height: 3rem;
+  color: $light;
+}
+.contact-btn:hover {
+  background: $light;
+  color: $primary;
+}
+
+// FOOTER
+.footer-logo {
+  height: 3rem;
+}
+.footer-nav li a {
+  font-size: 1.1rem;
+  color: $light;
+}
+.footer-icon {
+  font-size: 1.3rem;
+}
+.copyright {
+  height: 3rem;
+  border-top: 1px solid $light;
+}
+.copyright-text {
+  font-size: 0.8rem;
+}
+.c-text {
+  text-decoration: underline;
+}
+
+@media screen and (min-width: 900px) {
+  .header {
+    height: 6rem;
+    box-shadow: none;
+  }
+  .header-logo {
+    font-size: 1.5rem;
+  }
+  .nav {
+    position: relative;
+  }
+  .navigation {
+    position: relative;
+    top: 0rem;
+    left: 0rem;
+    width: auto;
+    height: 100%;
+    visibility: visible;
+    transform: translateY(0%);
+  }
+  .header-nav {
+    background: $light;
+    border-radius: 3rem;
+    margin: 0rem 0rem 0rem 0rem;
+    padding: 0.5rem 2rem 0.5rem 2rem !important;
+    border: 1px solid $primary;
+  }
+  .header-nav li,
+  .login-signup button {
+    font-size: 1rem;
+  }
+
+  // Hero
+  .text-container {
+    padding: 0rem 0px 0px 0px;
+  }
+  .hero-main-text {
+    font-size: 3rem;
+  }
+  .hero-sub-text {
+    font-size: 1.2rem;
+  }
+
+  .hero-img {
+    width: 25rem;
+    height: 30rem;
+    object-fit: cover;
+    object-position: right;
+    margin: 0rem 0rem 0rem 0rem;
+  }
+  .get-started,
+  .explore-templates {
+    font-size: 1.1rem;
+  }
+  .stat {
+    font-size: 2rem;
+  }
+
+  // About
+  .about-container {
+    height: auto;
+  }
+  .about-img {
+    width: 45%;
+    height: 20rem;
+    object-fit: cover;
+  }
+
+  // Benefits
+  .list-of-benefits {
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1.5rem;
+  }
+  .benefits-sub-text {
+    width: 80%;
+  }
+  .benefit {
+    width: 20rem;
+  }
+
+  // Featues
+  .list-of-features {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 1.5rem;
+  }
+  .feature {
+    height: 18rem;
+  }
+  .feature-header {
+    font-size: 1.5rem;
+  }
+  .feature-icon {
+    color: $primary;
+    font-size: 3rem;
+    margin: 2rem 0rem 0rem 0rem;
+  }
+
+  // Contact
+  .contact-card {
+    width: 40%;
+    height: 100%;
+  }
+  .contact-icon {
+    font-size: 1.5rem;
+    color: $primary;
+  }
+  .email,
+  .twitter {
+    font-size: 1.5rem;
+  }
+  .contact-form {
+    width: 60%;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1.5fr 1fr;
+    grid-gap: 1rem;
+  }
+  .subject-div {
+    grid-area: 2/1/3/3;
+  }
+  .message-div {
+    grid-area: 3/1/4/3;
+  }
+  .firstname,
+  .lastname,
+  .subject {
+    width: 100%;
+  }
+  .message {
+    width: 100%;
+  }
+
+  // Footer
+  .footer-icon {
+    font-size: 1.5rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  // Hero
+  .hero-img {
+    margin: 3rem 0rem 0rem 0rem;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  // Benefits
+  .list-of-benefits {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 0.5rem;
+  }
+  .benefit {
+    width: 15rem;
+    height: 20rem;
+  }
+}
+
+@media screen and (min-height: 800px) {
+  .hero {
+    height: 800px;
+  }
+}

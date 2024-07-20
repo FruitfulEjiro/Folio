@@ -1,0 +1,81 @@
+/** @format */
+
+// Bootstrap Variables
+$grid-breakpoints: (
+  xs: 0,
+  xxs: 320px,
+  xsm: 375px,
+  xm: 475px,
+  sm: 576px,
+  md: 768px,
+  lg: 900px,
+  xlg: 1024px,
+  xl: 1200px,
+  xxl: 1400px
+);
+
+// containers
+$container-max-widths: (
+  xs: 100%,
+  xxs: 100%,
+  xsm: 100%,
+  xm: 100%,
+  sm: 560px,
+  md: 740px,
+  lg: 870px,
+  xlg: 980px,
+  xl: 1000px,
+  xxl: 1201px
+);
+
+// Color Variables
+$primary: #29a688;
+$secondary: #2d6e62;
+$darkbg: #0a0a0a;
+$lightbg: #f5f5f5;
+$dark: #000000;
+$light: #fff;
+$transparent: #00000000;
+// $success: #fff;
+// $info: #b2b1b1;
+// $warning: yellow;
+// $danger: red;
+
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "darkbg": $darkbg,
+  "lightbg": $lightbg,
+  "dark": $dark,
+  "light": $light,
+  "transparent": $transparent,
+  //   "success": $success,
+    //   "info": $info,
+    //   "warning": $warning,
+    //   "danger": $danger,,,,
+);
+
+$zindex-levels: (
+  n1: -1,
+  0: 0,
+  1: 1,
+  2: 2,
+  3: 3,
+  4: 4,
+  5: 5,
+  6: 6,
+  7: 7
+);
+
+$link-color: $transparent !default;
+$link-decoration: none !default;
+$link-shade-percentage: 20% !default;
+
+$input-color: $transparent;
+$input-border-color: $transparent;
+$input-border-width: 1px !default;
+
+
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+@import "../../node_modules/bootstrap/scss/bootstrap";

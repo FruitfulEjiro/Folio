@@ -1,0 +1,12 @@
+{
+     "workbench.layoutControl.type": "both",
+     "workbench.list.fastScrollSensitivity": 3,
+     "workbench.list.smoothScrolling": true,
+     "workbench.iconTheme": "material-icon-theme",
+     "workbench.tree.expandMode": "singleClick",
+     "workbench.tree.indent": 20,
+     "workbench.editor.autoLockGroups": {
+          "imagePreview.previewEditor": true,
+          "pdf.preview": true
+     }
+}

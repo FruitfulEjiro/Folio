@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{>header}}
+    <title>Folio - Sign Up</title>
+    <link rel="stylesheet" href="./css/signup.css">
+</head>
+<body>
+    <main class="main m-0">
+
+        <section class="signup d-flex flex-column flex-md-row-reverse align-items-center justify-content-start align-items-md-center justify-content-md-center">
+            <div class="form-container col col-md-7 d-md-flex flex-column align-items-center justify-content-center align-items-xxl-start p-3 ps-xxl-5">
+                <a href="/" class="signup-logo d-inline-block d-md-none fw-bold text-primary mt-2">FOLIO</a>
+                <form action="/signup" method="post" class="signup-form d-flex flex-column align-items-center justify-content-start">
+                    <h1 class="signup-text text-primary text-center fw-bold mb-5">Create Account</h1>
+                    <div class="mb-4 w-100">
+                        <input type="text" class=" user-name w-100 rounded-1" name="fullname" id="fullname" placeholder="Name">
+                    </div>
+                    <div class="mb-4 w-100">
+                        <input type="email" class=" user-email w-100 rounded-1" name="email" id="email" placeholder="Email">
+                    </div>
+                    <div class="mb-4 w-100">
+                        <input type="password" class=" user-password w-100 rounded-1" name="password" id="password" placeholder="Password">
+                    </div>
+                    <button type="submit" class="btn btn-primary text-light fw-bold signup-button rounded-pill">SIGN UP</button>
+                    <p class="login mt-3 d-md-none">Already have an account? <a href="/login" class="text-primary">Login</a></p>
+                </form>
+            </div>
+            <div class="sidebar col col-md-5 d-none d-md-flex bg-primary d-flex flex-md-column align-items-md-center justify-content-md-center align-items-xxl-end p-3 pe-xxl-5 position-relative">
+                <a href="/" class="signup-logo d-inline-block fw-bold text-light mt-2">FOLIO</a>
+                <h1 class="welcome  text-light fw-bold mb-3">Welcome Back</h1>
+                <p class="welcome-text text-light text-center">To keep connected with us please login with your personal info</p>
+                <a href="/login" class="btn btn-light d-flex flex-column align-items-center justify-content-center text-primary fw-bold signup-button rounded-pill mt-3">LOGIN<a/>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
