@@ -1,0 +1,18 @@
+<script>
+        // Profile page Hamburger;
+        const profileHamburger = document.querySelector(".hamburger");
+        const sidebar = document.querySelector(".sidebar");
+
+        let flag = true
+
+        console.log(sidebar);
+
+        profileHamburger.addEventListener("click", () => {
+        if (flag) {
+            sidebar.style.transform = "translateX(0%)";
+        } else {
+            sidebar.style.transform = "translateX(-100%)";
+        }
+        flag = !flag;
+        });
+    </script>

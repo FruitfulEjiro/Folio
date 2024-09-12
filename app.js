@@ -1,53 +1,76 @@
 const express = require("express");
+const cookieParser = require("cookie-parser");
 const hbs = require("hbs");
-const bcrypt = require("bcrypt");
+const rateLimit = require("express-rate-limit");
+const helmet = require("helmet");
+const xss = require("xss-clean");
+const mongoSanitize = require("express-mongo-sanitize");
+const hpp = require("hpp");
 
 // Local modules
-const User = require("./model/userschema");
+const ErrorHandler = require("./controller/errorController");
+const AppError = require("./Utils/AppError");
+const {
+  signup,
+  login,
+  protect,
+  forgotPassword,
+  resetPassword,
+  updatePassword
+} = require("./controller/authController");
+const { updateMe } = require("./controller/userController");
 
+// initialize express app
 const app = express();
 
-// Number of salt rounds
-const saltRounds = 10;
-
-const hashPassword = async password => {
-  try {
-    // Generate a salt
-    const salt = await bcrypt.genSalt(saltRounds);
-    // Hash the password with the salt
-    const hashedPassword = await bcrypt.hash(password, salt);
-    return hashedPassword;
-  } catch (error) {
-    console.error("Error hashing password:", error);
-    throw error;
-  }
-};
-
-// Function to create new user
-const createUser = async ({ fullname, email, password }) => {
-  try {
-    const hashedPassword = await hashPassword(password);
-    const newUser = new User({
-      name: fullname,
-      email,
-      password: hashedPassword
-    });
-
-    await newUser.save();
-    console.log("User saved");
-  } catch (err) {
-    console.log("Error saving user:", err);
-  }
-};
+// Express Rate Limiting
+const limiter = rateLimit({
+  max: 100, //this should depend on the amount of request traffic the app receives
+  windowMs: 60 * 60 * 100,
+  message: "Too many requests, try again in 1 hour"
+});
 
 // Middlewares
 app.set("view engine", "hbs");
-app.use(express.json());
+app.use(
+  express.json({
+    limit: "1mb" //Limits the amount of data that cn be sent through the body of the request
+  })
+);
 app.use(express.static("Public"));
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+
+// Secutity Middlewares
+app.use(helmet());
+
+// Rate Limiting
+app.use(limiter);
+
+// Data Sanitization against NoSQL query injection
+app.use(mongoSanitize());
+// Data sanitization against Cross-site-scripting
+app.use(xss());
+
+// Preventing parameter pollution
+app.use(hpp());
+
+// Error Handling Middleware
+app.use(ErrorHandler);
+
+// Authentication Middleware
+app.use("/signup", signup);
+app.use("/login", login);
+app.use("/dashboard", protect);
+app.use("/profile", protect);
 
 // register partials directory for hbs
 hbs.registerPartials(`${__dirname}/Views/Partials`);
+
+// register default values for template
+hbs.registerHelper("default", function(value, defaultValue) {
+  return value || defaultValue;
+});
 
 // Route handlers
 app.get("/", (req, res) => {
@@ -58,21 +81,34 @@ app.get("/templates", (req, res) => {
   res.render("explore-templates");
 });
 
-app.get("/signup", (req, res) => {
+app.get("/sign-up", (req, res) => {
   res.render("signup");
 });
 
-app.post("/signup", async (req, res) => {
-  createUser(req.body);
-  res.redirect("/");
+app.get("/sign-in", (req, res) => {
+  res.render("login");
 });
 
-app.get("/login", (req, res) => {
-  res.render("login");
+app.get("/forgot_password", (req, res) => {
+  res.render("forgot-password");
+});
+
+app.get("/reset_password", (req, res) => {
+  res.render("reset-password");
+});
+
+app.get("/profile", (req, res) => {
+  const user = req.user;
+  res.render("profile", { user });
 });
 
 app.get("/about", (req, res) => {
   res.render("about");
+});
+
+app.get("/dashboard", (req, res) => {
+  const user = req.user;
+  res.render("dashboard", { user });
 });
 
 app.get("/temp", (req, res) => {
@@ -80,11 +116,8 @@ app.get("/temp", (req, res) => {
 });
 
 // Unhandled Routes
-app.all("*", (req, res) => {
-  res.status(404).json({
-    status: "Fail",
-    message: `Can't find ${req.originalUrl} in the server`
-  });
+app.all("*", (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} in the server`, 404));
 });
 
 module.exports = app;

@@ -16,17 +16,17 @@
     <main class="main">
      {{!-- Hero Section --}}
       <section class="hero">
-        <div class="hero-container container d-flex flex-lg-row justify-content-lg-between align-items-lg-center pt-lg-5">
+        <div class="hero-container container d-flex flex-lg-row justify-content-lg-between align-items-lg-center pt-lg-5 gap-3">
           <div
-            class="text-container d-flex flex-column align-items-start justify-content-center p-xlg-0"
+            class="text-container col-xlg-5 d-flex flex-column align-items-start justify-content-center p-xlg-0"
           >
             <h1 class="hero-main-text text-primary fw-bold m-0">Craft Your <br/> Professional Presence</h1>
             <p class="hero-sub-text my-4">Create stunning Portfolio's in minutes. No
               design skills required</p>
-            <div class="hero-btns d-flex flex-row align-items-start justify-content-center gap-5">
-              <button class="btn btn-primary get-started-btn p-3">
+            <div class="hero-btns d-flex flex-row align-items-start justify-content-center gap-4">
+              <button class="btn btn-primary get-started-btn d-none d-sm-block p-3">
                 <a href="/signup"
-                class="get-started fw-bold rounded-0 d-none d-sm-block"
+                class="get-started fw-bold rounded-0"
                 >Get Started<i class="fa-solid fa-arrow-right ms-3"></i></a>
               </button>
               <button class="btn btn-primary explore-templates-btn p-3">
@@ -35,7 +35,7 @@
                 >Explore Templates<i class="fa-solid fa-arrow-right ms-3"></i></a>
               </button>
             </div>
-            <div class="stats d-flex flex-row align-items-center justify-content-center gap-5 mt-4">
+            <div class="stats d-flex flex-row align-items-center justify-content-center gap-md-5 mt-4">
               <div class="template-stat">
                 <p class="m-0 text-primary fw-bold stat">200+</p>
                 <p class="m-0">Templates</p>
@@ -50,7 +50,9 @@
               </div>
             </div>
           </div>
-          <img src="./images/hero-img.png" alt="" class="hero-img" />
+          <img src="./svg/hero-img.svg" alt="" class="hero-img d-none d-lg-block" />
+          <img src="./svg/gear-1.svg" alt="" class="gear-1">
+          <img src="./svg/gear.svg" alt="" class="gear-2">
         </div>
       </section>
 
@@ -58,7 +60,7 @@
       <section class="about bg-light">
         <div class="container py-5">
           <div
-            class="about-container col d-flex flex-column flex-lg-row align-items-center justify-content-center"
+            class="about-container col d-flex flex-column flex-md-row align-items-center justify-content-center"
           >
             <img src="./images/Folie.jpeg" alt="" class="about-img" />
             <div class="about-text mt-3 px-3">
@@ -71,7 +73,7 @@
             </div>
           </div>
           <div
-            class="about-container col d-flex flex-column-reverse flex-lg-row align-items-center justify-content-center pt-5"
+            class="about-container col d-flex flex-column-reverse flex-md-row align-items-center justify-content-center pt-5"
           >
             <div class="about-text mt-3 px-3">
               <h2 class="about-main-text text-primary fw-bold">Instant,
@@ -103,7 +105,7 @@
             class="list-of-benefits mt-5"
           >
             <div
-              class="benefit d-flex flex-column align-items-center justify-content-center bg-light rounded-3 p-3"
+              class="benefit d-flex flex-column align-items-center justify-content-start bg-light rounded-3 p-3 py-4"
             >
               <i class="fa-solid fa-qrcode benefit-icon"></i>
               <h4
@@ -113,7 +115,7 @@
                 amet consectetur adipisicing elit. Beatae, voluptate!</p>
             </div>
             <div
-              class="benefit d-flex flex-column align-items-center justify-content-center bg-light rounded-3 p-3"
+              class="benefit d-flex flex-column align-items-center justify-content-start bg-light rounded-3 p-3 py-4"
             >
               <i class="fa-solid fa-qrcode benefit-icon"></i>
               <h4
@@ -123,7 +125,7 @@
                 amet consectetur adipisicing elit. Beatae, voluptate!</p>
             </div>
             <div
-              class="benefit d-flex flex-column align-items-center justify-content-center bg-light rounded-3 p-3"
+              class="benefit d-flex flex-column align-items-center justify-content-start bg-light rounded-3 p-3 py-4"
             >
               <i class="fa-solid fa-qrcode benefit-icon"></i>
               <h4
@@ -133,7 +135,7 @@
                 amet consectetur adipisicing elit. Beatae, voluptate!</p>
             </div>
             <div
-              class="benefit d-flex flex-column align-items-center justify-content-center bg-light rounded-3 p-3"
+              class="benefit d-flex flex-column align-items-center justify-content-start bg-light rounded-3 p-3 py-4"
             >
               <i class="fa-solid fa-qrcode benefit-icon"></i>
               <h4
@@ -159,7 +161,7 @@
           >
 
             <div
-              class="feature d-flex flex-column align-items-center justify-content-center align-items-lg-start bg-light rounded-3 p-3"
+              class="feature d-flex flex-column align-items-center justify-content-start align-items-lg-start bg-light rounded-3 p-3"
             >
               <i class="fa-solid fa-qrcode feature-icon"></i>
               <h3
@@ -170,7 +172,7 @@
             </div>
 
             <div
-              class="feature d-flex flex-column align-items-center justify-content-center align-items-lg-start bg-light rounded-3 p-3"
+              class="feature d-flex flex-column align-items-center justify-content-start align-items-lg-start bg-light rounded-3 p-3"
             >
               <i class="fa-solid fa-qrcode feature-icon"></i>
               <h3 class="feature-header fw-bold text-primary text-center text-lg-start mt-3">Files and
@@ -180,7 +182,7 @@
             </div>
 
             <div
-              class="feature d-flex flex-column align-items-center justify-content-center align-items-lg-start bg-light rounded-3 p-3"
+              class="feature d-flex flex-column align-items-center justify-content-start align-items-lg-start bg-light rounded-3 p-3"
             >
               <i class="fa-solid fa-qrcode feature-icon"></i>
               <h3 class="feature-header fw-bold text-primary text-center text-lg-start mt-3">Photos
@@ -190,7 +192,7 @@
             </div>
 
             <div
-              class="feature d-flex flex-column align-items-center justify-content-center align-items-lg-start bg-light rounded-3 p-3"
+              class="feature d-flex flex-column align-items-center justify-content-start align-items-lg-start bg-light rounded-3 p-3"
             >
               <i class="fa-solid fa-qrcode feature-icon"></i>
               <h3 class="feature-header fw-bold text-primary text-center text-lg-start mt-3">About and
@@ -200,7 +202,7 @@
             </div>
             
             <div
-              class="feature d-flex flex-column align-items-center justify-content-center align-items-lg-start bg-light rounded-3 p-3"
+              class="feature d-flex flex-column align-items-center justify-content-start align-items-lg-start bg-light rounded-3 p-3"
             >
               <i class="fa-solid fa-qrcode feature-icon"></i>
               <h3
@@ -211,7 +213,7 @@
             </div>
             
             <div
-              class="feature d-flex flex-column align-items-center justify-content-center align-items-lg-start bg-light rounded-3 p-3"
+              class="feature d-flex flex-column align-items-center justify-content-start align-items-lg-start bg-light rounded-3 p-3"
             >
               <i class="fa-solid fa-qrcode feature-icon"></i>
               <h3
@@ -222,7 +224,7 @@
             </div>
             
             <div
-              class="feature d-flex flex-column align-items-center justify-content-center align-items-lg-start bg-light rounded-3 p-3"
+              class="feature d-flex flex-column align-items-center justify-content-start align-items-lg-start bg-light rounded-3 p-3"
             >
               <i class="fa-solid fa-qrcode feature-icon"></i>
               <h3 class="feature-header fw-bold text-primary text-center text-lg-start mt-3">Content
@@ -232,7 +234,7 @@
             </div>
             
             <div
-              class="feature d-flex flex-column align-items-center justify-content-center align-items-lg-start bg-light rounded-3 p-3"
+              class="feature d-flex flex-column align-items-center justify-content-start align-items-lg-start bg-light rounded-3 p-3"
             >
               <i class="fa-solid fa-qrcode feature-icon"></i>
               <h3 class="feature-header fw-bold text-primary text-center text-lg-start mt-3">Contact
@@ -242,7 +244,7 @@
             </div>
             
             <div
-              class="feature d-flex flex-column align-items-center justify-content-center align-items-lg-start bg-light rounded-3 p-3"
+              class="feature d-flex flex-column align-items-center justify-content-start align-items-lg-start bg-light rounded-3 p-3"
             >
               <i class="fa-solid fa-qrcode feature-icon"></i>
               <h3

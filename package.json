@@ -6,7 +6,8 @@
   "scripts": {
     "sass:build": "sass --no-source-map ./public/scss:./public/css",
     "sass:watch": "sass --no-source-map --watch ./public/scss:./public/css",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "debug": "ndb server.js"
   },
   "author": "Fruitful Ejiro",
   "license": "MIT",
@@ -14,14 +15,23 @@
     "@fortawesome/fontawesome-free": "^6.5.2",
     "bcrypt": "^5.1.1",
     "bootstrap": "^5.3.3",
+    "cookie-parser": "^1.4.6",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "express-mongo-sanitize": "^2.2.0",
+    "express-rate-limit": "^7.4.0",
     "handlebars": "^4.7.8",
     "hbs": "^4.2.0",
+    "helmet": "^7.1.0",
+    "hpp": "^0.2.3",
+    "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.8.0",
     "mongoose": "^8.4.4",
+    "ndb": "^1.1.5",
+    "nodemailer": "^6.9.14",
     "nodemon": "^3.1.4",
-    "sass": "^1.77.6"
+    "sass": "^1.77.6",
+    "xss-clean": "^0.1.4"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
