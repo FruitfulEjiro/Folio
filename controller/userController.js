@@ -1,3 +1,6 @@
+const multer = require("multer");
+const sharp = require("sharp");
+
 const User = require("../model/userSchema");
 const CatchAsync = require("../Utils/ErrorHandler");
 
@@ -36,6 +39,8 @@ const updateMe = CatchAsync(async (req, res, next) => {
     runValidators: true
   });
 
+  // res.redirect("/dashboard");
+
   res.status(200).json({
     status: "success",
     data: {
@@ -46,7 +51,7 @@ const updateMe = CatchAsync(async (req, res, next) => {
 
 // Delete User Function
 const deleteMe = CatchAsync(async (req, res, next) => {
-  await user.findByIdAndUpdate(req.user.id, { active: false });
+  await User.findByIdAndUpdate(req.user.id, { active: false });
 
   res.status(204).json({
     status: "success",
@@ -61,4 +66,4 @@ const getMe = (req, res, next) => {
   next();
 };
 
-module.exports = { updateMe, deleteMe };
+module.exports = {updateMe, deleteMe, getMe };

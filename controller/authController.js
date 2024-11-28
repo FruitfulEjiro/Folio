@@ -170,6 +170,7 @@ const protect = CatchAsync(async (req, res, next) => {
   let token = req.cookies.jwt;
 
   if (!token) {
+    res.redirect("/login");
     return next(new AppError("You are not Logged in", 401));
   }
 
@@ -194,11 +195,22 @@ const protect = CatchAsync(async (req, res, next) => {
   next();
 });
 
+// Middleware to Signout Users
+const signout = CatchAsync(async (req, res, next) => {
+  res.cookie("jwt", "Logged Out", {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true
+  });
+
+  res.redirect("/");
+});
+
 module.exports = {
   signup,
   login,
-  protect,
   forgotPassword,
   resetPassword,
-  updatePassword
+  updatePassword,
+  protect,
+  signout
 };

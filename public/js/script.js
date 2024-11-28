@@ -1,17 +1,38 @@
 "use strict";
 
-const hamburger = document.querySelector(".hamburger-icon");
-const navigation = document.querySelector(".navigation");
+import { hamburger, dashboardHamburger } from "./hamburger.js";
+import { updateUser } from "./updateUser.js";
+import { addNewProject, addNewSkill, removeSkill } from "./portfolioForm.js";
 
-let flag = true;
+const hamburgerIcon = document.querySelector(".hamburger-icon");
+const profileHamburger = document.querySelector(".hamburger");
+const userForm = document.querySelector(".user-form");
+const projectButton = document.getElementById("addProjectButton");
+const skillButton = document.getElementById("addSkillButton");
+// let removeSkillButton = document.querySelectorAll(".fa-xmark");
 
-hamburger.addEventListener("click", () => {
-   if (flag) {
-      navigation.style.transform = "translateY(0%)";
-      navigation.style.visibility = "visible";
-   } else {
-      navigation.style.transform = "translateY(30%)";
-      navigation.style.visibility = "collapse";
-   }
-   flag = !flag;
-});
+if (hamburgerIcon) {
+  hamburgerIcon.addEventListener("click", hamburger);
+}
+
+if (profileHamburger) {
+  profileHamburger.addEventListener("click", dashboardHamburger);
+}
+
+if (userForm) {
+  userForm.addEventListener("submit", updateUser);
+}
+
+if (projectButton) {
+  projectButton.addEventListener("click", addNewProject);
+}
+
+if (skillButton) {
+  skillButton.addEventListener("click", addNewSkill);
+}
+
+// if (removeSkillButton) {
+//   removeSkillButton.forEach(el => {
+//     el.addEventListener("click", removeSkill);
+//   });
+// }

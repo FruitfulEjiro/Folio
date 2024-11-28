@@ -13,12 +13,24 @@ const AppError = require("./Utils/AppError");
 const {
   signup,
   login,
-  protect,
   forgotPassword,
   resetPassword,
-  updatePassword
+  updatePassword,
+  protect,
+  signout
 } = require("./controller/authController");
-const { updateMe } = require("./controller/userController");
+const { updateMe, userImageProcessor } = require("./controller/userController");
+const {
+  ImgUpload,
+  imageProcessor,
+  createPortfolio,
+  fetchUserPortfolio
+} = require("./controller/portfolioController");
+
+const uploadFiles = ImgUpload.fields([
+  { name: "resume", maxCount: 1 },
+  { name: "projectImage", maxCount: 10 }
+]);
 
 // initialize express app
 const app = express();
@@ -59,10 +71,9 @@ app.use(hpp());
 app.use(ErrorHandler);
 
 // Authentication Middleware
-app.use("/signup", signup);
-app.use("/login", login);
 app.use("/dashboard", protect);
 app.use("/profile", protect);
+// app.use("/create-portfolio", createPortfolio)
 
 // register partials directory for hbs
 hbs.registerPartials(`${__dirname}/Views/Partials`);
@@ -72,7 +83,8 @@ hbs.registerHelper("default", function(value, defaultValue) {
   return value || defaultValue;
 });
 
-// Route handlers
+// -----------------------------+++-----------------------------
+// ROUT HANDLERS
 app.get("/", (req, res) => {
   res.render("index");
 });
@@ -81,13 +93,19 @@ app.get("/templates", (req, res) => {
   res.render("explore-templates");
 });
 
-app.get("/sign-up", (req, res) => {
+app.get("/signup", (req, res) => {
   res.render("signup");
 });
 
-app.get("/sign-in", (req, res) => {
+app.post("/signup", signup);
+
+app.post("/login", login);
+
+app.get("/login", (req, res) => {
   res.render("login");
 });
+
+app.get("/signout", signout);
 
 app.get("/forgot_password", (req, res) => {
   res.render("forgot-password");
@@ -102,6 +120,8 @@ app.get("/profile", (req, res) => {
   res.render("profile", { user });
 });
 
+app.patch("/update-profile", protect, updateMe);
+
 app.get("/about", (req, res) => {
   res.render("about");
 });
@@ -111,9 +131,31 @@ app.get("/dashboard", (req, res) => {
   res.render("dashboard", { user });
 });
 
-app.get("/temp", (req, res) => {
-  res.render("templates/temp1");
+app.post(
+  "/create-portfolio",
+  protect,
+  uploadFiles,
+  imageProcessor,
+  createPortfolio
+);
+
+app.patch(
+  "/create-portfolio",
+  protect,
+  uploadFiles,
+  imageProcessor,
+  createPortfolio
+);
+
+app.get("/create-portfolio", protect, (req, res) => {
+  res.render("template-form");
 });
+
+// app.get("/temp0", (req, res) => {
+//   res.render("templates/5555");
+// });
+
+app.get("/me/:slug", fetchUserPortfolio);
 
 // Unhandled Routes
 app.all("*", (req, res, next) => {

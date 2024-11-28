@@ -17,29 +17,30 @@
         <section class="profile pt-5 pt-lg-0">
             <div class="profile-container container d-flex flex-column align-items-start justify-content-start p-3 py-5 pt-lg-5 pb-lg-4">
                 <h1 class="welcome-text align-self-start mt-5">Edit Profile</h1>
-                <div class="profile-info position-relative d-flex flex-column flex-md-row align-items-center justify-content-center mt-3 py-5 px-3 py-md-0">
-                    <form action="" method="">
+                <div class="profile-info position-relative d-flex flex-column align-items-center justify-content-center mt-3 py-5 px-3 py-md-0">
+                    <form action="" method="" class="user-form">
                         <div class="mb-3 w-100">
-                            <input type="file" class=" fullname w-100 rounded-1" name="fullname" id="fullname" placeholder="Fullname">
+                            <input type="text" class="fullname w-100 rounded-1" name="name" id="name" placeholder="Fullname" required>
                         </div>
                         <div class="mb-3 w-100">
-                            <input type="text" class=" fullname w-100 rounded-1" name="fullname" id="fullname" placeholder="Fullname">
+                            <input type="email" class="email w-100 rounded-1" name="email" id="email" placeholder="Email" required>
                         </div>
                         <div class="mb-3 w-100">
-                            <input type="email" class=" email w-100 rounded-1" name="email" id="email" placeholder="Email">
+                            <input type="text" class="city w-100 rounded-1" name="city" id="city" placeholder="City" required>
                         </div>
                         <div class="mb-3 w-100">
-                            <input type="text" class=" city w-100 rounded-1" name="city" id="city" placeholder="City">
+                            <input type="text" class="state w-100 rounded-1" name="state" id="state" placeholder="State" required>
                         </div>
                         <div class="mb-3 w-100">
-                            <input type="text" class=" state w-100 rounded-1" name="state" id="state" placeholder="State">
+                            <input type="text" class="country w-100 rounded-1" name="country" id="country" placeholder="Country" required>
                         </div>
                         <div class="mb-3 w-100">
-                            <input type="text" class=" country w-100 rounded-1" name="country" id="country" placeholder="Country">
+                            <input type="number" class="number w-100 rounded-1" name="number" id="number" placeholder="Phone Number" required>
                         </div>
                         <div class="mb-3 w-100">
-                            <input type="number" class=" number w-100 rounded-1" name="number" id="number" placeholder="Phone Number">
+                            <textarea class="summary w-100 rounded-1" name="summary" id="summary" placeholder="Summary about Yourself" required></textarea>
                         </div>
+                        <button type="submit" class="btn btn-primary text-light fw-bold update-button rounded-0 mt-3 mb-4">SAVE</button>
                     </form>
                 </div>
             </div>
@@ -59,6 +60,6 @@
     </main>
 
     <script src="./js/bootstrap.bundle.min.js"></script>
-    {{> hamburger}}
+    <script type="module" src="./js/script.js"></script>
 </body>
 </html>

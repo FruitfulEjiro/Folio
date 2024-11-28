@@ -1,0 +1,112 @@
+<!-- @format -->
+
+<html lang="en">
+  <head>
+    {{>header}}
+    <link rel="stylesheet" href="/css/0000.css" />
+    <title>Template</title>
+  </head>
+  <body>
+    <header class="header m-0">
+      <nav
+        class="nav container p-3 p-md-0 d-flex flex-row align-items-center justify-content-between position-relative"
+      >
+        <a class="header-logo d-inline-block fw-bold m-0">FOLIO</a>
+        <i class="fa-solid fa-bars hamburger-icon fw-bold d-md-none"></i>
+        <ul
+          class="navigation-items m-0 p-3 pt-5 p-md-0 d-flex flex-column flex-md-row justify-content-start align-items-center align-items-md-center justify-content-md-center gap-5 gap-md-3 fw-bold"
+        >
+          <li class="header-about"><a href="">About</a></li>
+          <li class="header-skill"><a href="#skills">Skills</a></li>
+          <li class="header-project"><a href="#projects">Projects</a></li>
+          <li class="header-contact"><a href="#contacts">Contact</a></li>
+        </ul>
+        <ul class="header-socials d-none d-md-flex flex-row align-items-center justify-content-center gap-2 m-0 p-0">
+          {{#each portfolio.socials}}
+            <li><a href=""><i class="fa-brands fa-{{this}}"></i></a></l>
+          {{/each}}
+        </ul>
+      </nav>
+    </header>
+
+    <main class="main">
+      <section class="hero">
+        <div class="container hero-container d-flex flex-column align-items-start justify-content-center">
+          <h1 class="hero-text m-0 ms-md-1">Hello👋, I'm a</h1>
+          <h1 class="hero-text-2 m-0 mt-2 fw-bold">
+            {{portfolio.jobRole}}
+          </h1> 
+          <p class="hero-sub-text m-0 mt-3 ms-md-1">
+            {{portfolio.bio}}
+          </p>
+          <a href="/documents/{{portfolio.resume}}" download class="btn hero-btn rounded-0 mt-3 ms-md-1 py-md-3 px-md-4"><i class="fa-solid fa-download me-2"></i> Download My CV</a>
+        </div>
+      </section>
+
+      <section class="skills" id="skills">
+        <div class="container skills-container d-flex flex-column align-items-start justify-content-start gap-3 py-5">
+          <h2 class="skills-main-text fw-bold align-self-center text-center">Skills</h2>
+          <div class="skill-container mt-3">
+            {{#each portfolio.skills}}
+              <div class="skill">
+                <p class="skill-name">{{this.name}}</p>
+                <div class="progress">
+                  <div class="progess-bar skill-experience" style="width: {{percentage}}%" aria-valuenow="{{this.percentage}}" aria-valuemin="0" aria-valuemax="100">
+                  </div>
+                </div>
+              </div>
+            {{/each}}
+          </div>
+        </div>
+      </section>
+
+      <section class="projects py-5" id="projects">
+        <div class="container projects-container d-flex flex-column align-items-center justify-content-start">
+          <h2 class="project-main-text fw-bold text-center">Projects</h2>
+          <div class="project-container mt-3">
+            {{#each portfolio.projects}}
+              <div class="project p-3">
+                <img src="/images/project-images/{{this.projectImage}}" alt="" class="project-img">
+                <div class="project-text p-3">
+                  <h2 class="project-heading fw-bold">{{this.projectTitle}}</h2>
+                  <p class="project-sumary">{{this.projectSummary}}</p>
+                  <button class=""><a href="{{projectURL}}" class="btn project-btn rounded-0 text-white">View</a></button>
+                </div>
+              </div>
+            {{/each}}
+          </div>
+        </div>
+      </section>
+
+      <section class="contacts" id="contacts">
+        <div class="container contacts-container py-4 d-md-flex flex-row align-items-center justify-content-center">
+          <h2 class="contacts-main-text fw-bold pe-5">Want to work with Me?</h2>
+          <form action="" class="contacts-form mt-3">
+            <label for="email" class="mb-1">Email</label>
+            <input type="email" class="contact-email d-block rounded-2 w-100" name="" id="email">
+
+            <label for="message" class="mt-4 mb-1">Message</label>
+            <textarea name="" class="message d-block rounded-2 mb-4 w-100" id="message"></textarea>
+            <button type="submit" class="btn contact-btn">Send</button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-container d-flex flex-column align-items-center justify-content-center p-0 pt-4 pt-md-5">
+        <h2 class="username text-light fw-bold">{{portfolio.name}}</h2>
+        <div class="socials d-flex flex-row align-items-center justify-content-center gap-3 mb-2 pb-3 pb-md-5">
+          {{#each portfolio.socials}}
+            <li><a href=""><i class="fa-brands fa-{{this}}"></i></a></l>
+          {{/each}}
+        </div>
+      </div>
+      <div class="copyright d-flex flex-row align-items-center justify-content-center w-100">
+        <p class="copyright-text text-light m-0"> &COPY Copyright 2024 developed by <a href="https://x.com/frutfl" class="text-light"> Frutfl </a></p>
+      </div>
+    </footer>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/template.js"></script>
+  </body>
+</html>

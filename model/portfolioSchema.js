@@ -3,42 +3,49 @@ const mongoose = require("mongoose");
 const portfolioSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, "Name is required"]
   },
   email: {
     type: String,
-    required: [true, "Email is required"]
   },
   phoneNumber: {
     type: Number,
     required: false
   },
-  about: {
+  bio: {
     type: String,
-    required: [true, "Give a summary about yourself"]
   },
-  skills: {
-    type: [],
-    required: [true, "Add One or more skills"]
+  slug: {
+    type: String
   },
+  skills: [
+    {
+      name: String,
+      percentage: String
+    }
+  ],
   socials: {
-    type: [],
-    required: [true, "Add one or more social accounts"]
+    type: [String]
   },
-  projects: {
-    type: [],
-    required: [true, "Add one or more projects"]
-  },
+  projects: [
+    {
+      projectTitle: String,
+      projectSummary: String,
+      projectUrl: String,
+      projectImage: String
+    }
+  ],
   resume: {
-    type: String,
-    required: false
-  },
-  avatar: {
     type: String,
     required: false
   },
   jobRole: {
     type: String,
-    required: [true, "Add your Job or Role"]
+  },
+  templateId: {
+    type: String,
   }
 });
+
+const Portfolio = mongoose.model("Portfolio", portfolioSchema);
+
+module.exports = { Portfolio };

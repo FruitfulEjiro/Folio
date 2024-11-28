@@ -66,6 +66,35 @@ body {
   border-top: 1px solid $primary;
 }
 
+.profile-info {
+  border: 2px solid $primary;
+  border-radius: 1rem;
+}
+
+.fullname,
+.email,
+.city,
+.state,
+.country,
+.number {
+  height: 3rem;
+  width: 100%;
+  padding: 1rem;
+  font-weight: 600;
+  border: none;
+  border: 1px solid #e4e4e452;
+  background: #e4e4e452;
+}
+.summary {
+  height: 6rem;
+  width: 100%;
+  padding: 1rem;
+  font-weight: 600;
+  border: none;
+  border: 1px solid #e4e4e452;
+  background: #e4e4e452;
+}
+
 @media screen and (min-width: 768px) {
 }
 

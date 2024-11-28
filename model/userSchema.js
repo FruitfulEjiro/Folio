@@ -10,8 +10,7 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: [true, "You must add an email"],
-    unique: [true],
-    select: false
+    unique: [true]
   },
   password: {
     type: String,
@@ -24,8 +23,7 @@ const userSchema = new mongoose.Schema({
     required: [true, "You must put a confirm password"]
   },
   number: {
-    type: Number,
-    select: false
+    type: Number
   },
   country: {
     type: String,
@@ -41,11 +39,6 @@ const userSchema = new mongoose.Schema({
   },
   summary: {
     type: String,
-    default: "A Description about yourself"
-  },
-  templateId: {
-    type: String,
-    select: false
   },
   portfolioUrl: {
     type: String,
@@ -62,11 +55,7 @@ const userSchema = new mongoose.Schema({
   active: {
     type: Boolean,
     default: true,
-    select: false
-  },
-  active: {
-    type: Boolean,
-    default: true,
+    select: false,
     enum: ["true", "false"]
   }
 });
