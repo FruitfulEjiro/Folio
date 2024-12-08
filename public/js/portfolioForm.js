@@ -17,8 +17,7 @@ export function addNewProject() {
   <label for="projectUrl">Project Link:</label>
   <input type="url" name="projectUrl[]" required>
 
-  <label for="projectImage" class="btn btn-outline-primary mt-3">Add Project Image:</label>
-  <input type="file" class="d-none" id="projectImage" name="projectImage" accept="image/*" required>
+  <input type="file" class="mt-3 p-3 border-0" id="projectImage" name="projectImage"  accept="image/*" required>
 `;
 
   // Append the new project entry to the container

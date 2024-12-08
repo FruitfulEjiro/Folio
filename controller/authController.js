@@ -177,6 +177,11 @@ const protect = CatchAsync(async (req, res, next) => {
   // Verify JWT
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
+  if(!decoded) {
+    res.redirect("/login");
+    return next(new AppError("You are not Logged in", 401));
+  }
+
   // Find User by id from decoded token
   const user = await User.findById(decoded.id);
   if (!user) {
