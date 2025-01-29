@@ -75,7 +75,7 @@ const forgotPassword = CatchAsync(async (req, res, next) => {
   // Get user from Database
   const user = await user.find({ email });
   if (!user) {
-    return next(new AppError("No User found with tis Email", 404));
+    return next(new AppError("No User found with this Email", 404));
   }
 
   // Generate random reset token
