@@ -12,6 +12,8 @@ import ErrorHandler from "./Utils/error.js";
 import router from "./routes/route.js";
 
 // initialize express app
+const app = express();
+
 const allowedOrigins = [
   "https://folio-opal-three.vercel.app/generate",
   "http://localhost:8080"
@@ -29,7 +31,6 @@ app.use(
      credentials: true,
   })
 );
-// const app = express();
 // app.use(
 //   cors({
 //     origin: ["http://localhost:8080"], // Specify the full origin with protocol and port
