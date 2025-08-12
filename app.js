@@ -15,7 +15,7 @@ import router from "./routes/route.js";
 const app = express();
 
 const allowedOrigins = [
-  "https://folio-opal-three.vercel.app/generate",
+  "https://folio-opal-three.vercel.app/",
   "http://localhost:8080"
 ];
 
