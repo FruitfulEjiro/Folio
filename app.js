@@ -8,7 +8,7 @@ import hpp from "hpp";
 import cors from "cors";
 
 // Local modules
-import ErrorHandler from "./Utils/errorHandler.js";
+import ErrorHandler from "./Utils/errorHandler.js"
 import router from "./routes/route.js";
 
 // initialize express app
