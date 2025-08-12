@@ -57,6 +57,10 @@ app.use(hpp());
 // Route Handlers
 app.use(router);
 
+app.get("/", (req, res) => {
+  res.status(200).send("Welcome to the API!");
+});
+
 // Error Handling Middleware
 app.use(ErrorHandler);
 
