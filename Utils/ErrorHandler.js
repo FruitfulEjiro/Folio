@@ -1,8 +1,13 @@
-// Async Error Handler
-const CatchAsync = fn => {
-  return (req, res, next) => {
-    fn(req, res, next).catch(next);
+const ErrorHandler = (err, req, res, next) => {
+    console.log(err);
+    err.statusCode = err.statusCode || 500;
+    err.status = err.status || "error";
+  
+    res.status(err.statusCode).json({
+      status: err.status,
+      message: err.message,
+      err
+    });
   };
-};
 
-module.exports = CatchAsync;
+export default ErrorHandler;

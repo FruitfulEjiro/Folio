@@ -1,9 +1,11 @@
-const crypto = require("crypto");
-const User = require("../model/userSchema");
-const CatchAsync = require("../Utils/ErrorHandler");
-const AppError = require("../Utils/AppError");
-const jwt = require("jsonwebtoken");
-const sendEmail = require("../Utils/Email");
+import crypto from "crypto";
+import CatchAsync from "express-async-handler";
+import jwt from "jsonwebtoken";
+
+// Local Modules
+import User from "../model/userSchema.js";
+import AppError from "../Utils/AppError.js";
+import sendMail from "../Utils/Email.js";
 
 // Generate JWT
 const generateToken = userID => {
@@ -13,7 +15,7 @@ const generateToken = userID => {
   return token;
 };
 
-const createSendToken = (user, statusCode, res) => {
+const createSendToken = (user, code, res) => {
   const token = generateToken(user._id);
   const cookieOptions = {
     expires: new Date(
@@ -24,14 +26,22 @@ const createSendToken = (user, statusCode, res) => {
 
   if (process.env.NODE_ENV === "Production") cookieOptions.secure = true;
 
-  res.cookie("jwt", token, cookieOptions);
+  res.cookie("jwt", token, cookieOptions).json({
+    status: "Success",
+    message: code === 201 ? "User Created Successfully" : "Login Successful",
+    data: {
+      user
+    },
+    redirect: "/profile"
+  });
   user.password = undefined;
 };
 
 // Signup function
-const signup = CatchAsync(async (req, res, next) => {
+export const signup = CatchAsync(async (req, res, next) => {
   const { fullname, email, password, confirmPassword } = req.body;
 
+  console.log(fullname, email, password, confirmPassword);
   // Create User
   const newUser = await User.create({
     name: fullname,
@@ -42,12 +52,10 @@ const signup = CatchAsync(async (req, res, next) => {
 
   // Generate JWT token and send via Cookie
   createSendToken(newUser, 201, res);
-
-  res.redirect("/dashboard");
 });
 
 // Login function
-const login = CatchAsync(async (req, res, next) => {
+export const login = CatchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
   // Check if email and password exist
@@ -56,6 +64,7 @@ const login = CatchAsync(async (req, res, next) => {
   }
 
   // Find User by email
+
   const user = await User.findOne({ email }).select("+password");
 
   if (!user || !(await user.correctPassword(password, user.password))) {
@@ -63,23 +72,21 @@ const login = CatchAsync(async (req, res, next) => {
   }
 
   // Generate JWT token and send via Cookie
-  createSendToken(user, 201, res);
-
-  res.redirect("/dashboard");
+  createSendToken(user, 200, res);
 });
 
 // Forgot password function
-const forgotPassword = CatchAsync(async (req, res, next) => {
+export const forgotPassword = CatchAsync(async (req, res, next) => {
   const { email } = req.body;
 
   // Get user from Database
-  const user = await user.find({ email });
+  const user = await User.findOne({ email });
   if (!user) {
     return next(new AppError("No User found with this Email", 404));
   }
 
   // Generate random reset token
-  const resetToken = createPasswordResetToken();
+  const resetToken = user.createPasswordResetToken();
   await user.save({ validatebeforeSave: false });
 
   // Send Mail to user
@@ -110,11 +117,11 @@ const forgotPassword = CatchAsync(async (req, res, next) => {
 });
 
 // Reset password function
-const resetPassword = CatchAsync(async (req, res, next) => {
+export const resetPassword = CatchAsync(async (req, res, next) => {
   // Get user based on the reset token
   const hashedToken = crypto
     .createHash("sha256")
-    .update(req.param.token)
+    .update(req.params.token)
     .digest("hex");
   const user = await user.findOne({
     passwordResetToken: hashedToken,
@@ -145,7 +152,7 @@ const resetPassword = CatchAsync(async (req, res, next) => {
 });
 
 // Update password function
-const updatePassword = CatchAsync(async (req, res, next) => {
+export const updatePassword = CatchAsync(async (req, res, next) => {
   const { id, password, passwordConfirm } = req.body;
   // Get user from collection
   const user = await User.findById(id).select("+password");
@@ -165,26 +172,39 @@ const updatePassword = CatchAsync(async (req, res, next) => {
 });
 
 // Middleware to Protect Routes
-const protect = CatchAsync(async (req, res, next) => {
+export const protect = CatchAsync(async (req, res, next) => {
   // Retrieve the token from cookie
   let token = req.cookies.jwt;
 
   if (!token) {
-    res.redirect("/login");
+    res.status(401).json({
+      status: "Failed",
+      message: "You are not Logged in",
+      redirect: "/login"
+    });
     return next(new AppError("You are not Logged in", 401));
   }
 
   // Verify JWT
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-  if(!decoded) {
-    res.redirect("/login");
+  if (!decoded) {
+    res.status(401).json({
+      status: "Failed",
+      message: "You are not Logged in",
+      redirect: "/login"
+    });
     return next(new AppError("You are not Logged in", 401));
   }
 
   // Find User by id from decoded token
   const user = await User.findById(decoded.id);
   if (!user) {
+    res.status(404).json({
+      status: "Failed",
+      message: "The User belonging to this token no longer exists",
+      redirect: "/login"
+    });
     return next(
       new AppError("The User belonging to this token no longer exists", 401)
     );
@@ -192,6 +212,11 @@ const protect = CatchAsync(async (req, res, next) => {
 
   // Check if user changed password after token was issued
   if (user.changedPasswordAt(decoded.iat)) {
+    res.status(401).json({
+      status: "Failed",
+      message: "User changed password, Login again",
+      redirect: "/login"
+    });
     return next(new AppError("User changed password, Login again", 401));
   }
 
@@ -201,21 +226,15 @@ const protect = CatchAsync(async (req, res, next) => {
 });
 
 // Middleware to Signout Users
-const signout = CatchAsync(async (req, res, next) => {
-  res.cookie("jwt", "Logged Out", {
-    expires: new Date(Date.now() + 10 * 1000),
-    httpOnly: true
-  });
-
-  res.redirect("/");
+export const signout = CatchAsync(async (req, res, next) => {
+  res
+    .cookie("jwt", "Logged Out", {
+      expires: new Date(Date.now() + 5 * 1000),
+      httpOnly: true
+    })
+    .json({
+      status: "Success",
+      message: "Logout Successful",
+      redirect: "/"
+    });
 });
-
-module.exports = {
-  signup,
-  login,
-  forgotPassword,
-  resetPassword,
-  updatePassword,
-  protect,
-  signout
-};

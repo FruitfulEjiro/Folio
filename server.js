@@ -1,15 +1,15 @@
 // Error Handling for synchronous functions outside Express
 process.on("uncaughtException", err => {
   console.log("An uncaught error occured:", err);
-  // process.exit(1);
+  process.exit(1);
 });
 
 // Modules
-const dotenv = require("dotenv");
+import dotenv from "dotenv"
 
 // Local Modules
-const app = require("./app");
-const connectDB = require("./model/DB");
+import app from "./app.js"
+import connectDB from "./model/DB.js"
 
 dotenv.config();
 

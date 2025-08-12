@@ -1,6 +1,4 @@
 {
-  "plugins": ["hbs"],
-  "handlebars": true,
   "prettier.tabWidth": 4,
   "prettier.printWidth": 120
 }

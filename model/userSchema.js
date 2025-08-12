@@ -1,6 +1,6 @@
-const crypto = require("crypto");
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+import crypto from "crypto";
+import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -38,7 +38,7 @@ const userSchema = new mongoose.Schema({
     default: "Nil"
   },
   summary: {
-    type: String,
+    type: String
   },
   portfolioUrl: {
     type: String,
@@ -81,7 +81,6 @@ userSchema.pre("save", async function(next) {
 // Document middleware to set passwordChangedAt date whwnever password is updated by user
 userSchema.pre("save", function(next) {
   if (!this.isModified("password") || this.isNew) return next();
-
   this.passwordChangedAt = Date.now() - 1000;
 });
 
@@ -116,4 +115,5 @@ userSchema.methods.changedPasswordAt = function(JWTTimeStamp) {
 };
 
 const User = mongoose.model("User", userSchema);
-module.exports = User;
+
+export default User;

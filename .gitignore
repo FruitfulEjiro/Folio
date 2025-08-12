@@ -2,3 +2,7 @@ node_modules
 design
 css
 .env
+views
+views/*
+public
+public/*

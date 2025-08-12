@@ -1,8 +1,10 @@
-const multer = require("multer");
-const sharp = require("sharp");
+import multer from "multer"
+import sharp from "sharp"
+import CatchAsync from "express-async-handler"
 
-const User = require("../model/userSchema");
-const CatchAsync = require("../Utils/ErrorHandler");
+// Local Modules
+import User from "../model/userSchema.js"
+import AppError from "../Utils/AppError.js"
 
 // Function to filter request fields
 const filterObj = (obj, ...allowedFields) => {
@@ -15,7 +17,7 @@ const filterObj = (obj, ...allowedFields) => {
 };
 
 // Update User function
-const updateMe = CatchAsync(async (req, res, next) => {
+export const updateMe = CatchAsync(async (req, res, next) => {
   // create error if user posts password data
   if (req.body.password || req.body.passwordConfirm) {
     return next(new AppError("Cant Update password on this route", 400));
@@ -39,8 +41,6 @@ const updateMe = CatchAsync(async (req, res, next) => {
     runValidators: true
   });
 
-  // res.redirect("/dashboard");
-
   res.status(200).json({
     status: "success",
     data: {
@@ -49,8 +49,14 @@ const updateMe = CatchAsync(async (req, res, next) => {
   });
 });
 
+// Get User
+export const getMe = (req, res, next) => {
+  req.params.id = req.user.id;
+  next();
+};
+
 // Delete User Function
-const deleteMe = CatchAsync(async (req, res, next) => {
+export const deleteMe = CatchAsync(async (req, res, next) => {
   await User.findByIdAndUpdate(req.user.id, { active: false });
 
   res.status(204).json({
@@ -60,10 +66,3 @@ const deleteMe = CatchAsync(async (req, res, next) => {
     }
   });
 });
-
-const getMe = (req, res, next) => {
-  req.params.id = req.user.id;
-  next();
-};
-
-module.exports = {updateMe, deleteMe, getMe };

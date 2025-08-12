@@ -30,9 +30,3 @@ if (projectButton) {
 if (skillButton) {
   skillButton.addEventListener("click", addNewSkill);
 }
-
-// if (removeSkillButton) {
-//   removeSkillButton.forEach(el => {
-//     el.addEventListener("click", removeSkill);
-//   });
-// }

@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const portfolioSchema = new mongoose.Schema({
   name: {
@@ -48,4 +48,4 @@ const portfolioSchema = new mongoose.Schema({
 
 const Portfolio = mongoose.model("Portfolio", portfolioSchema);
 
-module.exports = { Portfolio };
+export default Portfolio;

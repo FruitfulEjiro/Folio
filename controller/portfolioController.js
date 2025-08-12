@@ -1,134 +1,73 @@
-const fs = require("fs");
-const multer = require("multer");
-const sharp = require("sharp");
+import fs from "fs";
+import CatchAsync from "express-async-handler";
 
 // Local Modules
-const { Portfolio } = require("../model/portfolioSchema");
-const CatchAsync = require("../Utils/ErrorHandler");
-const AppError = require("../Utils/AppError");
+import Portfolio from "../model/portfolioSchema.js";
+import AppError from "../Utils/AppError.js";
 
-// saving Images
-const multerStorage = multer.memoryStorage();
+export const createPortfolio = CatchAsync(async (req, res) => {
+  const skill = req.body.skillList.map(skill => {
+    return { name: skill.name, percentage: skill.percent };
+  });
 
-// Image Filter
-const multerFilter = (req, file, cb) => {
-  if (
-    file.mimetype.startsWith("image") ||
-    file.mimetype.split("/")[1] === "pdf"
-  ) {
-    cb(null, true);
-  } else {
-    cb(
-      new AppError("Not an Image or PDF! Upload Only Images or PDF's", 400),
-      false
-    );
-  }
-};
+  const project = req.body.projects.map(project => {
+    return {
+      projectTitle: project.title,
+      projectSummary: project.summary,
+      projectUrl: project.url,
+      projectImage: project.image
+    };
+  });
 
-const ImgUpload = multer({
-  storage: multerStorage,
-  fileFilter: multerFilter
-});
+  console.log(skill, project);
 
-// Image Processor for Project Images
-const imageProcessor = CatchAsync(async (req, res, next) => {
-  if (!req.files) {
-    console.log("no req.files found");
-    return next();
-  }
+  const newPortfolio = new Portfolio({
+    name: req.body.fullName,
+    email: req.body.email,
+    phoneNumber: req.body.phone,
+    bio: req.body.bio,
+    slug: req.body.username,
+    skills: skill,
+    socials: req.body.socials,
+    projects: project,
+    resume: "",
+    jobRole: req.body.title,
+    templateId: req.body.template.toLowerCase()
+  });
 
-  // Processor for Resume
-  if (req.files.resume) {
-    req.files.resume.filename = `user-${req.user.id}-${Date.now()}.pdf`;
+  await newPortfolio.save();
+  console.log("Portfolio Created Successfully!");
 
-    const resume = req.files.resume[0].buffer;
-    fs.writeFile(
-      `./public/documents/${req.files.resume.filename}`,
-      resume,
-      err => {
-        if (err) {
-          console.error("Error saving PDF:", err);
-        } else {
-          res.status(201);
-          console.log("PDF saved successfully!");
-        }
-      }
-    );
-  }
-
-  // Processor for Project Images
-  if (req.files["projectImage"]) {
-    req.files["projectImage"].forEach(async image => {
-      image.filename = `project-${req.user.id}-${Date.now()}.jpeg`;
-      await sharp(image.buffer)
-        .resize(500, 500)
-        .toFormat("jpeg")
-        .jpeg({ quality: 90 })
-        .toFile(`./public/images/project-images/${image.filename}`);
-    });
-  }
-
-  next();
-});
-
-const createPortfolio = CatchAsync(async (req, res) => {
-  try {
-    let resume;
-
-    const skills = req.body.skill.map((skill, index) => ({
-      name: skill,
-      percentage: req.body.skillPercentage[index]
-    }));
-
-    const projects = req.body.projectTitle.map((title, index) => ({
-      projectTitle: title,
-      projectSummary: req.body.projectSummary[index],
-      projectUrl: req.body.projectUrl[index],
-      projectImage: req.files["projectImage"][index].filename
-    }));
-
-    if (req.files.resume) {
-      resume = req.files.resume.filename;
+  res.status(200).json({
+    status: "Success",
+    message: "Portfolio Created Successfully",
+    data: {
+      newPortfolio
     }
-
-    const newPortfolio = new Portfolio({
-      name: req.body.name,
-      email: req.body.email,
-      phoneNumber: req.body.phoneNumber,
-      bio: req.body.bio,
-      slug: req.body.slug,
-      skills: skills,
-      socials: req.body.socials,
-      projects: projects,
-      resume: resume,
-      jobRole: req.body.jobRole,
-      templateId: req.body.templateId
-    });
-
-    await newPortfolio.save();
-    console.log("Portfolio Created Successfully!");
-    res.redirect("/dashboard");
-  } catch (error) {
-    console.log("portfolio saving error", error);
-    res.status(500).send("Error saving portfolio: " + error);
-  }
+  });
 });
 
-const fetchUserPortfolio = CatchAsync(async (req, res, next) => {
+export const fetchUserPortfolio = CatchAsync(async (req, res, next) => {
   const portfolio = await Portfolio.findOne({ slug: req.params.slug });
   if (!portfolio) {
     return next(
       new AppError("Portfolio Not Found! Check URL for Incorrect Spelling", 404)
     );
   }
+  console.log("done");
 
-  const templateId = portfolio.templateId;
-  res.render(`templates/${templateId}`, { portfolio });
+  res.status(200).json({
+    status: "Success",
+    message: "User Portfolio Found",
+    data: {
+      portfolio
+    }
+  });
 });
 
-module.exports = {
-  ImgUpload,
-  imageProcessor,
-  createPortfolio,
-  fetchUserPortfolio
-};
+export const checkUsername = CatchAsync(async (req, res, next) => {
+  const { username } = req.params;
+  const checkUsername = await Portfolio.findOne({ slug: username });
+  if (!checkUsername) return res.status(200).json({ status: "success" });
+  return res.status(200).json({ status: "failed" });
+});
