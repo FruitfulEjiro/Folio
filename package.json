@@ -2,7 +2,7 @@
   "name": "folio---portfolio-generator",
   "version": "1.0.0",
   "description": "",
-  "main": "App.js",
+  "main": "server.js",
   "type": "module",
   "scripts": {
     "sass:build": "sass --no-source-map ./public/scss:./public/css",
