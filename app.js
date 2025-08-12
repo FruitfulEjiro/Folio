@@ -12,15 +12,32 @@ import ErrorHandler from "./Utils/error.js";
 import router from "./routes/route.js";
 
 // initialize express app
-const app = express();
+const allowedOrigins = [
+  "https://folio-opal-three.vercel.app/generate",
+  "http://localhost:8080"
+];
+
 app.use(
   cors({
-    origin: ["http://localhost:8080"], // Specify the full origin with protocol and port
-    credentials: true,
-    methods: ["GET", "POST", "OPTIONS"],
-    allowedHeaders: ["Content-Type"]
+     origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+           callback(null, true);
+        } else {
+           callback(new Error("Not allowed by CORS"));
+        }
+     },
+     credentials: true,
   })
 );
+// const app = express();
+// app.use(
+//   cors({
+//     origin: ["http://localhost:8080"], // Specify the full origin with protocol and port
+//     credentials: true,
+//     methods: ["GET", "POST", "OPTIONS"],
+//     allowedHeaders: ["Content-Type"]
+//   })
+// );
 
 // Express Rate Limiting
 const limiter = rateLimit({
