@@ -6,6 +6,7 @@ import Portfolio from "../model/portfolioSchema.js";
 import AppError from "../Utils/AppError.js";
 
 export const createPortfolio = CatchAsync(async (req, res) => {
+  console.log(req.body)
   const skill = req.body.skillList.map(skill => {
     return { name: skill.name, percentage: skill.percent };
   });

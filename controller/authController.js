@@ -44,13 +44,12 @@ const createSendToken = (user, code, res) => {
 export const signup = CatchAsync(async (req, res, next) => {
   const { fullname, email, password, confirmPassword } = req.body;
 
-  console.log(fullname, email, password, confirmPassword);
+  console.log(fullname, email, password);
   // Create User
   const newUser = await User.create({
     name: fullname,
     email,
     password,
-    confirmPassword
   });
 
   // Generate JWT token and send via Cookie
