@@ -42,7 +42,7 @@ const createSendToken = (user, code, res) => {
 
 // Signup function
 export const signup = CatchAsync(async (req, res, next) => {
-  const { fullname, email, password, confirmPassword } = req.body;
+  const { fullname, email, password } = req.body;
 
   console.log(fullname, email, password);
   // Create User
