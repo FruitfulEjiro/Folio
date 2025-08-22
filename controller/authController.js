@@ -47,7 +47,7 @@ export const signup = CatchAsync(async (req, res, next) => {
   console.log(fullname, email, password);
   // Create User
   const newUser = await User.create({
-    name: fullname,
+    name,
     email,
     password,
   });
