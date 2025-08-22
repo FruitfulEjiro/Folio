@@ -1,10 +1,10 @@
-import multer from "multer"
-import sharp from "sharp"
-import CatchAsync from "express-async-handler"
+import multer from "multer";
+import sharp from "sharp";
+import CatchAsync from "express-async-handler";
 
 // Local Modules
-import User from "../model/userSchema.js"
-import AppError from "../Utils/AppError.js"
+import User from "../model/userSchema.js";
+import AppError from "../Utils/AppError.js";
 
 // Function to filter request fields
 const filterObj = (obj, ...allowedFields) => {
@@ -50,10 +50,16 @@ export const updateMe = CatchAsync(async (req, res, next) => {
 });
 
 // Get User
-export const getMe = (req, res, next) => {
-  req.params.id = req.user.id;
-  next();
-};
+export const getMe = CatchAsync(async (req, res, next) => {
+  const user = await User.findById(req.user.id);
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      user
+    }
+  });
+});
 
 // Delete User Function
 export const deleteMe = CatchAsync(async (req, res, next) => {
