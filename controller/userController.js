@@ -1,5 +1,3 @@
-import multer from "multer";
-import sharp from "sharp";
 import CatchAsync from "express-async-handler";
 
 // Local Modules
