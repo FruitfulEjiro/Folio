@@ -15,8 +15,8 @@ import router from "./routes/route.js";
 const app = express();
 
 const allowedOrigins = [
-  "https://folio-opal-three.vercel.app",
-  "http://localhost:8080"
+  "https://folio.pxxl.live",
+  "http://localhost:8080",
 ];
 
 app.use(
