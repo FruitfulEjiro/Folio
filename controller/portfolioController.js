@@ -4,23 +4,25 @@ import CatchAsync from "express-async-handler";
 // Local Modules
 import Portfolio from "../model/portfolioSchema.js";
 import AppError from "../Utils/AppError.js";
+import { uploadImageCloudinary } from "../Utils/cloudinary.js";
 
 export const createPortfolio = CatchAsync(async (req, res) => {
-  console.log(req.body)
+  console.log(req.body);
   const skill = req.body.skillList.map(skill => {
     return { name: skill.name, percentage: skill.percent };
   });
 
-  const project = req.body.projects.map(project => {
+  const projects = req.body.projects.map(async project => {
+    const url = await uploadImageCloudinary(project.imageBase64);
+
     return {
       projectTitle: project.title,
       projectSummary: project.summary,
       projectUrl: project.url,
-      projectImage: project.image
+      projectImage: url
     };
   });
 
-  console.log(skill, project);
 
   const newPortfolio = new Portfolio({
     name: req.body.fullName,
@@ -30,8 +32,8 @@ export const createPortfolio = CatchAsync(async (req, res) => {
     slug: req.body.username,
     skills: skill,
     socials: req.body.socials,
-    projects: project,
-    resume: "",
+    projects: await Promise.all(projects),
+    resume: await uploadImageCloudinary(req.body.resumePdfBase64),
     jobRole: req.body.title,
     templateId: req.body.template.toLowerCase()
   });

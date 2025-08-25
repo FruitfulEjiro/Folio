@@ -2,17 +2,17 @@ import mongoose from "mongoose";
 
 const portfolioSchema = new mongoose.Schema({
   name: {
-    type: String,
+    type: String
   },
   email: {
-    type: String,
+    type: String
   },
   phoneNumber: {
     type: Number,
     required: false
   },
   bio: {
-    type: String,
+    type: String
   },
   slug: {
     type: String
@@ -39,11 +39,11 @@ const portfolioSchema = new mongoose.Schema({
     required: false
   },
   jobRole: {
-    type: String,
+    type: String
   },
   templateId: {
-    type: String,
-  }
+    type: String
+  },
 });
 
 const Portfolio = mongoose.model("Portfolio", portfolioSchema);
